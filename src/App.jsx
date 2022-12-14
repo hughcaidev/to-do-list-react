@@ -14,17 +14,21 @@ const generateKey = (pre) => {
 
 function App() {
     const [items, setItems] = useState(initialToDoList)
+    const [currentEditTask, setEditTask] = useState()
     const inputRef = useRef()
+    const editItemRef = useRef()
 
-    function onSubmit(e) {
+    const activeTasks = items.filter((item) => !item.complete)
+    const completedTasks = items.filter((item) => item.complete)
+
+    function addTask(e) {
         e.preventDefault()
 
         const task = inputRef.current.value
 
         if (task === "") return
 
-        const key = generateKey(task)
-        const item = { key, task, complete: false }
+        const item = { key: generateKey(task), task, complete: false }
 
         setItems((prev) => [...prev, item])
 
@@ -46,58 +50,78 @@ function App() {
         setItems(newList)
     }
 
+    function editTask(item) {
+        setEditTask(item)
+    }
+
+    function updateItem(e) {
+        e.preventDefault()
+
+        const updatedTask = editItemRef.current.value
+
+        if (updatedTask == "") return
+
+        const updateList = items.map((item) => {
+            if (item === currentEditTask) {
+                return { ...item, task: updatedTask }
+            }
+
+            return item
+        })
+
+        setItems(updateList)
+        setEditTask()
+    }
+
     return (
         <div className="App">
-            <form onSubmit={onSubmit}>
+            <form onSubmit={addTask}>
                 New Item: <input type="text" ref={inputRef}></input>
                 <button type="submit">Add</button>
             </form>
             <h2>In Progress</h2>
             <ul>
-                {items
-                    .filter((item) => !item.complete)
-                    .map((item, index) => {
-                        const { key, task, complete } = item
-                        return (
-                            <li key={key}>
-                                {task}
-                                <button
-                                    onClick={() => toggleTaskCompleted(item)}
-                                >
-                                    Complete
-                                </button>
-                                <button
-                                    onClick={() => removeItemFromList(item)}
-                                >
-                                    &times;
-                                </button>
-                            </li>
-                        )
-                    })}
+                {activeTasks.map((item, index) => {
+                    const { key, task, complete } = item
+                    return (
+                        <li key={key}>
+                            {task}
+                            <button onClick={() => editTask(item)}>Edit</button>
+                            <button onClick={() => toggleTaskCompleted(item)}>
+                                Complete
+                            </button>
+                            <button onClick={() => removeItemFromList(item)}>
+                                &times;
+                            </button>
+                        </li>
+                    )
+                })}
             </ul>
             <h2>Completed</h2>
             <ul>
-                {items
-                    .filter((item) => item.complete)
-                    .map((item, index) => {
-                        const { key, task, complete } = item
-                        return (
-                            <li key={key}>
-                                {task}
-                                <button
-                                    onClick={() => toggleTaskCompleted(item)}
-                                >
-                                    In Progress
-                                </button>
-                                <button
-                                    onClick={() => removeItemFromList(item)}
-                                >
-                                    &times;
-                                </button>
-                            </li>
-                        )
-                    })}
+                {completedTasks.map((item, index) => {
+                    const { key, task, complete } = item
+                    return (
+                        <li key={key}>
+                            {task}
+                            <button onClick={() => toggleTaskCompleted(item)}>
+                                In Progress
+                            </button>
+                            <button onClick={() => removeItemFromList(item)}>
+                                &times;
+                            </button>
+                        </li>
+                    )
+                })}
             </ul>
+            {currentEditTask ? (
+                <form onSubmit={updateItem}>
+                    Task: <input type="text" ref={editItemRef}></input>
+                    <button type="submit">Update</button>
+                </form>
+            ) : (
+                <></>
+            )}
         </div>
     )
 }
