@@ -21,6 +21,10 @@ function App() {
     const activeTasks = items.filter((item) => !item.complete)
     const completedTasks = items.filter((item) => item.complete)
 
+    useEffect(() => {
+        console.log(activeTasks)
+    }, [activeTasks])
+
     function addTask(e) {
         e.preventDefault()
 
@@ -81,38 +85,56 @@ function App() {
             </form>
             <h2>In Progress</h2>
             <ul>
-                {activeTasks.map((item, index) => {
-                    const { key, task, complete } = item
-                    return (
-                        <li key={key}>
-                            {task}
-                            <button onClick={() => editTask(item)}>Edit</button>
-                            <button onClick={() => toggleTaskCompleted(item)}>
-                                Complete
-                            </button>
-                            <button onClick={() => removeItemFromList(item)}>
-                                &times;
-                            </button>
-                        </li>
-                    )
-                })}
+                {activeTasks.length > 0 ? (
+                    activeTasks.map((item, index) => {
+                        const { key, task, complete } = item
+                        return (
+                            <li key={key}>
+                                {task}
+                                <button onClick={() => editTask(item)}>
+                                    Edit
+                                </button>
+                                <button
+                                    onClick={() => toggleTaskCompleted(item)}
+                                >
+                                    Complete
+                                </button>
+                                <button
+                                    onClick={() => removeItemFromList(item)}
+                                >
+                                    &times;
+                                </button>
+                            </li>
+                        )
+                    })
+                ) : (
+                    <p>Looks like there are no tasks left. Try adding one!</p>
+                )}
             </ul>
             <h2>Completed</h2>
             <ul>
-                {completedTasks.map((item, index) => {
-                    const { key, task, complete } = item
-                    return (
-                        <li key={key}>
-                            {task}
-                            <button onClick={() => toggleTaskCompleted(item)}>
-                                In Progress
-                            </button>
-                            <button onClick={() => removeItemFromList(item)}>
-                                &times;
-                            </button>
-                        </li>
-                    )
-                })}
+                {completedTasks.length > 0 ? (
+                    completedTasks.map((item, index) => {
+                        const { key, task, complete } = item
+                        return (
+                            <li key={key}>
+                                {task}
+                                <button
+                                    onClick={() => toggleTaskCompleted(item)}
+                                >
+                                    In Progress
+                                </button>
+                                <button
+                                    onClick={() => removeItemFromList(item)}
+                                >
+                                    &times;
+                                </button>
+                            </li>
+                        )
+                    })
+                ) : (
+                    <p>Try adding a task!</p>
+                )}
             </ul>
             {currentEditTask ? (
                 <form onSubmit={updateItem}>
