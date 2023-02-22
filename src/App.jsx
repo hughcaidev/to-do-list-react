@@ -2,6 +2,8 @@ import { useEffect, useRef, useState } from "react"
 import reactLogo from "./assets/react.svg"
 // import './App.css'
 
+// import "./styles.css"
+
 const initialToDoList = [
     { task: "Task 1", key: 1, complete: false },
     { task: "Task 2", key: 2, complete: true },
@@ -20,10 +22,6 @@ function App() {
 
     const activeTasks = items.filter((item) => !item.complete)
     const completedTasks = items.filter((item) => item.complete)
-
-    useEffect(() => {
-        console.log(activeTasks)
-    }, [activeTasks])
 
     function addTask(e) {
         e.preventDefault()
@@ -79,71 +77,94 @@ function App() {
 
     return (
         <div className="App">
-            <form onSubmit={addTask}>
-                New Item: <input type="text" ref={inputRef}></input>
-                <button type="submit">Add</button>
-            </form>
-            <h2>In Progress</h2>
-            <ul>
-                {activeTasks.length > 0 ? (
-                    activeTasks.map((item, index) => {
-                        const { key, task, complete } = item
-                        return (
-                            <li key={key}>
-                                {task}
-                                <button onClick={() => editTask(item)}>
-                                    Edit
-                                </button>
-                                <button
-                                    onClick={() => toggleTaskCompleted(item)}
-                                >
-                                    Complete
-                                </button>
-                                <button
-                                    onClick={() => removeItemFromList(item)}
-                                >
-                                    &times;
-                                </button>
-                            </li>
-                        )
-                    })
-                ) : (
-                    <p>Looks like there are no tasks left. Try adding one!</p>
-                )}
-            </ul>
-            <h2>Completed</h2>
-            <ul>
-                {completedTasks.length > 0 ? (
-                    completedTasks.map((item, index) => {
-                        const { key, task, complete } = item
-                        return (
-                            <li key={key}>
-                                {task}
-                                <button
-                                    onClick={() => toggleTaskCompleted(item)}
-                                >
-                                    In Progress
-                                </button>
-                                <button
-                                    onClick={() => removeItemFromList(item)}
-                                >
-                                    &times;
-                                </button>
-                            </li>
-                        )
-                    })
-                ) : (
-                    <p>Try adding a task!</p>
-                )}
-            </ul>
-            {currentEditTask ? (
-                <form onSubmit={updateItem}>
-                    Task: <input type="text" ref={editItemRef}></input>
-                    <button type="submit">Update</button>
+            <div className="to-do-list">
+                <form onSubmit={addTask}>
+                    <label>New Item: </label>
+                    <input type="text" ref={inputRef}></input>
+                    <button type="submit">Add</button>
                 </form>
-            ) : (
-                <></>
-            )}
+                <h2>In Progress</h2>
+                <ul className="list">
+                    {activeTasks.length > 0 ? (
+                        activeTasks.map((item, index) => {
+                            const { key, task, complete } = item
+                            return (
+                                <li key={key} className="item">
+                                    <p>{task}</p>
+
+                                    <div className="item--button-container">
+                                        <button onClick={() => editTask(item)}>
+                                            Edit
+                                        </button>
+                                        <button
+                                            onClick={() =>
+                                                toggleTaskCompleted(item)
+                                            }
+                                        >
+                                            Complete
+                                        </button>
+                                        <button
+                                            onClick={() =>
+                                                removeItemFromList(item)
+                                            }
+                                        >
+                                            &times;
+                                        </button>
+                                    </div>
+                                </li>
+                            )
+                        })
+                    ) : (
+                        <p>
+                            Looks like there are no tasks left. Try adding one!
+                        </p>
+                    )}
+                </ul>
+                <h2>Completed</h2>
+                <ul className="list">
+                    {completedTasks.length > 0 ? (
+                        completedTasks.map((item, index) => {
+                            const { key, task, complete } = item
+                            return (
+                                <li key={key} className="item completed">
+                                    <div className="item-content">
+                                        <p>{task}</p>
+                                        <p className="due-date">
+                                            Due: 12/10/22
+                                        </p>
+                                    </div>
+                                    <div className="item--button-container">
+                                        <button
+                                            onClick={() =>
+                                                toggleTaskCompleted(item)
+                                            }
+                                        >
+                                            In Progress
+                                        </button>
+                                        <button
+                                            onClick={() =>
+                                                removeItemFromList(item)
+                                            }
+                                        >
+                                            &times;
+                                        </button>
+                                    </div>
+                                </li>
+                            )
+                        })
+                    ) : (
+                        <p>Try adding a task!</p>
+                    )}
+                </ul>
+                {currentEditTask ? (
+                    <form onSubmit={updateItem}>
+                        Task: <input type="text" ref={editItemRef}></input>
+                        <button type="submit">Update</button>
+                    </form>
+                ) : (
+                    <></>
+                )}
+            </div>
         </div>
     )
 }
