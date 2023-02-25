@@ -3,7 +3,7 @@ import React, { useState, useContext } from 'react'
 const initialToDoList = [
     { task: 'Task 1', key: 1, complete: false },
     { task: 'Task 2', key: 2, complete: true },
-    { task: 'Task 3', key: 3, complete: false }
+    { task: 'Task 3', key: 3, complete: false, completionDate: '2023-02-26' }
 ]
 
 const TaskListContext = React.createContext({})
@@ -26,7 +26,8 @@ export function TaskListProvider({ children }) {
     function updateTaskInList(currentTask, updatedTask) {
         const updateList = items.map((item) => {
             if (item === currentTask) {
-                return { ...item, task: updatedTask }
+                const { task, completionDate } = updatedTask
+                return { ...item, task, completionDate }
             }
 
             return item

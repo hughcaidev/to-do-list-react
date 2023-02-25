@@ -6,13 +6,14 @@ function ToDoItem({ item }) {
     const { removeItemFromList, toggleTaskCompleted } = useTaskList()
     const { setEdittedTask } = useEdittedTask()
 
-    const { key, task, complete } = item
+    const { key, task, complete, completionDate } = item
 
     return (
         <li key={key} className="item">
             <div className="item-content">
                 <p>{task}</p>
-                {complete && <p className="due-date">Due: 12/10/22</p>}
+                {/* {complete && <p className="due-date">Due: 12/10/22</p>} */}
+                {completionDate && <p className="due-date">Due: {completionDate}</p>}
             </div>
             <div className="item--button-container">
                 {!complete && (
