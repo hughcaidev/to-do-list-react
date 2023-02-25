@@ -1,35 +1,19 @@
-import { React, useRef, useState } from 'react'
+import React from 'react'
 import TaskList from './components/ToDoList'
 import { useTaskList } from './context/TaskListContext'
 import AddTaskForm from './components/AddTaskForm'
+import EditTaskForm from './components/EditTaskForm'
+import { useEdittedTask } from './context/EditTaskContext'
 // import './App.css'
 
 // import "./styles.css"
 
 function App() {
-    const { items, updateTaskInList } = useTaskList()
-    const [currentEditTask, setEditTask] = useState()
-
-    const editItemRef = useRef()
+    const { items } = useTaskList()
+    const { edittedTask, setEdittedTask } = useEdittedTask()
 
     const activeTasks = items.filter((item) => !item.complete)
     const completedTasks = items.filter((item) => item.complete)
-
-    // function editTask(item) {
-    //     setEditTask(item);
-    // }
-
-    function updateItem(e) {
-        e.preventDefault()
-
-        const updatedTask = editItemRef.current.value
-
-        if (updatedTask === '') return
-
-        updateTaskInList(currentEditTask, updatedTask)
-
-        setEditTask()
-    }
 
     return (
         <div className="App">
@@ -45,12 +29,9 @@ function App() {
                     title="Completed"
                     emptyListMessage="Try adding a task!"
                 />
-                {currentEditTask ? (
-                    <form onSubmit={updateItem}>
-                        Task: <input type="text" ref={editItemRef} />
-                        <button type="submit">Update</button>
-                    </form>
-                ) : null}
+                {edittedTask && (
+                    <EditTaskForm currentEditTask={edittedTask} setEditTask={setEdittedTask} />
+                )}
             </div>
         </div>
     )

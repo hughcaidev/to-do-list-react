@@ -1,8 +1,10 @@
 import React from 'react'
 import { useTaskList } from '../context/TaskListContext'
+import { useEdittedTask } from '../context/EditTaskContext'
 
 function ToDoItem({ item }) {
     const { removeItemFromList, toggleTaskCompleted } = useTaskList()
+    const { setEdittedTask } = useEdittedTask()
 
     const { key, task, complete } = item
 
@@ -13,9 +15,11 @@ function ToDoItem({ item }) {
                 {complete && <p className="due-date">Due: 12/10/22</p>}
             </div>
             <div className="item--button-container">
-                {/* <button type="button" onClick={() => editTask(item)}>
-            Edit
-        </button> */}
+                {!complete && (
+                    <button type="button" onClick={() => setEdittedTask(item)}>
+                        Edit
+                    </button>
+                )}
                 {!complete ? (
                     <button type="button" onClick={() => toggleTaskCompleted(item)}>
                         Complete
