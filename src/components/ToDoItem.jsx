@@ -6,7 +6,8 @@ function ToDoItem({ item }) {
     const { removeItemFromList, toggleTaskCompleted } = useTaskList()
     const { setEdittedTask } = useEdittedTask()
 
-    const { key, task, complete, completionDate } = item
+    const { key, task, complete, completionDate, dateCompleted } = item
+    const dateCompletedFormated = new Date(dateCompleted)
 
     return (
         <li key={key} className="item">
@@ -14,6 +15,9 @@ function ToDoItem({ item }) {
                 <p>{task}</p>
                 {/* {complete && <p className="due-date">Due: 12/10/22</p>} */}
                 {completionDate && <p className="due-date">Due: {completionDate}</p>}
+                {dateCompleted && (
+                    <p>Completed on {dateCompletedFormated.toLocaleDateString('en-GB')}</p>
+                )}
             </div>
             <div className="item--button-container">
                 {!complete && (

@@ -39,7 +39,9 @@ export function TaskListProvider({ children }) {
     function toggleTaskCompleted(item) {
         const newList = items.map((i) => {
             if (i === item) {
-                const updateItem = { ...i, complete: !item.complete }
+                const dateCompleted = !item.complete ? Date.now() : null
+
+                const updateItem = { ...i, complete: !item.complete, dateCompleted }
                 return updateItem
             }
             return i
