@@ -2,15 +2,11 @@ import React, { useState, useContext } from 'react'
 
 const initialToDoList = [
     { task: 'Task 1', key: 1, complete: false },
-    { task: 'Task 2', key: 2, complete: true },
+    { task: 'Task 2', key: 2, complete: true, dateCompleted: Date('1677415007518') },
     { task: 'Task 3', key: 3, complete: false, completionDate: '2023-02-26' }
 ]
 
 const TaskListContext = React.createContext({})
-
-export function useTaskList() {
-    return useContext(TaskListContext)
-}
 
 export function TaskListProvider({ children }) {
     const [items, setItems] = useState(initialToDoList)
@@ -60,4 +56,8 @@ export function TaskListProvider({ children }) {
     }
 
     return <TaskListContext.Provider value={foo}>{children}</TaskListContext.Provider>
+}
+
+export function useTaskList() {
+    return useContext(TaskListContext)
 }

@@ -1,16 +1,23 @@
 import React from 'react'
+import { useTaskList } from '../context/TaskListContext'
 import ToDoItem from './ToDoItem'
 
-function TaskList({ tasks, title, emptyListMessage }) {
+function TaskList({ emptyListMessage }) {
+    const { items } = useTaskList()
+
+    const activeTasks = items.filter((item) => !item.complete)
+    const completedTasks = items.filter((item) => item.complete)
+
     return (
         <div>
-            <h2>{title}</h2>
             <ul className="list">
-                {tasks.length > 0 ? (
-                    tasks.map((item) => <ToDoItem item={item} />)
-                ) : (
-                    <p>{emptyListMessage}</p>
-                )}
+                {activeTasks.map((task) => (
+                    <ToDoItem item={task} />
+                ))}
+                {completedTasks.map((task) => (
+                    <ToDoItem item={task} />
+                ))}
+                {items.length === 0 && <p>{emptyListMessage}</p>}
             </ul>
         </div>
     )
