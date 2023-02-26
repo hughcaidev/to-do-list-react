@@ -6,27 +6,30 @@ function ToDoItem({ item }) {
     const { removeItemFromList, toggleTaskCompleted } = useTaskList()
     const { setEdittedTask } = useEdittedTask()
 
-    const { key, task, complete } = item
+    const { key, task, complete, completionDate, dateCompleted } = item
+    const dateCompletedFormated = new Date(dateCompleted)
 
     return (
-        <li key={key} className="item">
+        <li key={key} className="item" style={{ listStyle: 'none', padding: '1rem' }}>
+            <label htmlFor={key}>
+                <input
+                    type="checkbox"
+                    id={key}
+                    checked={complete}
+                    onClick={() => toggleTaskCompleted(item)}
+                />
+                {task}
+            </label>
             <div className="item-content">
-                <p>{task}</p>
-                {complete && <p className="due-date">Due: 12/10/22</p>}
+                {completionDate && <p className="due-date">Due: {completionDate}</p>}
+                {dateCompleted && (
+                    <p>Completed on {dateCompletedFormated.toLocaleDateString('en-GB')}</p>
+                )}
             </div>
             <div className="item--button-container">
                 {!complete && (
                     <button type="button" onClick={() => setEdittedTask(item)}>
                         Edit
-                    </button>
-                )}
-                {!complete ? (
-                    <button type="button" onClick={() => toggleTaskCompleted(item)}>
-                        Complete
-                    </button>
-                ) : (
-                    <button type="button" onClick={() => toggleTaskCompleted(item)}>
-                        In Progress
                     </button>
                 )}
                 <button type="button" onClick={() => removeItemFromList(item)}>

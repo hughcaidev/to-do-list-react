@@ -6,22 +6,30 @@ function EditTaskForm({ currentEditTask, setEditTask }) {
     const [errorMessage, setErrorMessage] = useState(null)
 
     const editItemRef = useRef()
+    const dateCompleteRef = useRef()
 
     useEffect(() => {
         if (!currentEditTask) {
             return
         }
-        const { task } = currentEditTask
+        const { task, completionDate } = currentEditTask
 
         editItemRef.current.value = task
+        dateCompleteRef.current.value = completionDate
     }, [currentEditTask])
 
     function updateItem(e) {
         e.preventDefault()
 
-        const updatedTask = editItemRef.current.value
+        const updatedTaskName = editItemRef.current.value
+        const updateCompletionDate = dateCompleteRef.current.value
 
-        if (updatedTask === '') {
+        const updatedTask = {
+            task: updatedTaskName,
+            completionDate: updateCompletionDate
+        }
+
+        if (updatedTaskName === '') {
             setErrorMessage('You need to enter an task')
             return
         }
@@ -41,6 +49,15 @@ function EditTaskForm({ currentEditTask, setEditTask }) {
                 Task: <input type="text" ref={editItemRef} id="edit-task" />
             </label>
             {errorMessage && <p>{errorMessage}</p>}
+            <label htmlFor="complete-date">
+                Due date:
+                <input
+                    type="date"
+                    ref={dateCompleteRef}
+                    id="complete-date"
+                    pattern="\d{2}-\d{2}-\d{4}"
+                />
+            </label>
             <button type="submit">Update</button>
         </form>
     )

@@ -2,15 +2,11 @@ import React, { useState, useContext } from 'react'
 
 const initialToDoList = [
     { task: 'Task 1', key: 1, complete: false },
-    { task: 'Task 2', key: 2, complete: true },
-    { task: 'Task 3', key: 3, complete: false }
+    { task: 'Task 2', key: 2, complete: true, dateCompleted: Date('1677415007518') },
+    { task: 'Task 3', key: 3, complete: false, completionDate: '2023-02-26' }
 ]
 
 const TaskListContext = React.createContext({})
-
-export function useTaskList() {
-    return useContext(TaskListContext)
-}
 
 export function TaskListProvider({ children }) {
     const [items, setItems] = useState(initialToDoList)
@@ -26,7 +22,8 @@ export function TaskListProvider({ children }) {
     function updateTaskInList(currentTask, updatedTask) {
         const updateList = items.map((item) => {
             if (item === currentTask) {
-                return { ...item, task: updatedTask }
+                const { task, completionDate } = updatedTask
+                return { ...item, task, completionDate }
             }
 
             return item
@@ -38,7 +35,9 @@ export function TaskListProvider({ children }) {
     function toggleTaskCompleted(item) {
         const newList = items.map((i) => {
             if (i === item) {
-                const updateItem = { ...i, complete: !item.complete }
+                const dateCompleted = !item.complete ? Date.now() : null
+
+                const updateItem = { ...i, complete: !item.complete, dateCompleted }
                 return updateItem
             }
             return i
@@ -57,4 +56,8 @@ export function TaskListProvider({ children }) {
     }
 
     return <TaskListContext.Provider value={foo}>{children}</TaskListContext.Provider>
+}
+
+export function useTaskList() {
+    return useContext(TaskListContext)
 }
