@@ -1,0 +1,206 @@
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    color: #555;
+}
+
+/* h1,
+h2,
+h3 {
+    color: #333;
+} */
+
+/* :root {
+    height: 100vh;
+} */
+/* 
+form{
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+} */
+
+/* label {
+    display: block;
+    margin-bottom: 0.5em;
+} */
+
+/* input[type='text'] {
+    padding: 0.5em 1em;
+    border-radius: 0.5em;
+
+    border: 0.1em solid #777;
+} */
+
+/* .App {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+
+    background-color: #ddd;
+} */
+
+/* .to-do-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    background-color: #eee;
+    padding: 2em;
+    border-radius: 1em;
+
+    min-width: 30em;
+}
+
+.list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+} */
+
+form {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    /* margin: 1em; */
+    padding: 1em 0;
+}
+
+h1 {
+    line-height: 1.2;
+    margin-bottom: 0.5em;
+}
+label > p {
+    margin-bottom: 0.5em;
+}
+
+form > input {
+    display: block;
+}
+
+input[type='text'],
+input[type='date'] {
+    padding: 0.5em;
+    border-style: solid;
+    border-radius: 0.2em;
+    border-color: #222;
+    border-width: 0.01em;
+}
+
+input[type='text'] {
+    width: 100%;
+}
+
+button {
+    padding: 0.5em;
+}
+
+.App {
+    width: clamp(320px, 480px, 100%);
+    padding: 1em;
+    margin: 2em auto;
+}
+
+.close-btn {
+    position: absolute;
+    right: 0;
+    /* width: 2em; */
+}
+
+label {
+    position: relative;
+    margin-bottom: 0.75em;
+}
+
+input.error {
+    border-color: red;
+}
+
+.error-message {
+    font-size: 0.75rem;
+    position: absolute;
+    color: red;
+}
+
+.list {
+    list-style: none;
+    padding: 0;
+    /* width: clamp(320px, 640px, 100%); */
+}
+
+.item {
+    /* background-color: #fff; */
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 1em 0;
+    /* border: .05em solid #777; */
+    border-radius: 0.5em;
+}
+
+.item.complete > * {
+    color: #ccc;
+}
+
+.item.complete .task-name {
+    text-decoration: line-through;
+}
+
+.item-data {
+    display: flex;
+}
+
+.item-data > input {
+    /* position: absolute; */
+    margin-bottom: auto;
+}
+
+.task-details {
+    display: inline-block;
+    margin-left: 1em;
+}
+
+.task-name {
+    margin-bottom: 0.5em;
+}
+
+.item-content {
+    /* width: 100%; */
+    display: flex;
+    /* flex-direction: column; */
+    /* gap: 0.5em; */
+    justify-content: space-between;
+    font-size: 0.75em;
+}
+
+.item--button-container {
+    display: flex;
+    gap: 0.5em;
+}
+
+.reset-date-btn {
+    margin-left: 1.5em;
+}
+
+/* .item--button-container > button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1em;
+    height: 2.5em;
+    width: 2.5em;
+
+    background-color: transparent;
+    border-radius: 0.5em;
+    border: 0.1em solid #777;
+} */
+
+/* .item--button-container > button:hover {
+    cursor: pointer;
+} */

@@ -39,25 +39,29 @@ function EditTaskForm({ currentEditTask, setEditTask }) {
         setEditTask()
     }
 
+    function clearDate() {
+        dateCompleteRef.current.value = ''
+    }
+
     return (
         <form onSubmit={updateItem}>
-            <button type="button" onClick={() => setEditTask()}>
-                Close
+            <button type="button" onClick={() => setEditTask()} className="close-btn">
+                &times;
             </button>
-            <p>Edit Task</p>
+            <h2>Edit Task</h2>
             <label htmlFor="edit-task">
-                Task: <input type="text" ref={editItemRef} id="edit-task" />
+                <p>Task (required)</p>
+                <input type="text" ref={editItemRef} id="edit-task" />
             </label>
             {errorMessage && <p>{errorMessage}</p>}
             <label htmlFor="complete-date">
-                Due date:
-                <input
-                    type="date"
-                    ref={dateCompleteRef}
-                    id="complete-date"
-                    pattern="\d{2}-\d{2}-\d{4}"
-                />
+                <p>Due Date</p>
+                <input type="date" ref={dateCompleteRef} id="complete-date" />
+                <button type="button" onClick={clearDate} className="reset-date-btn">
+                    Reset date
+                </button>
             </label>
+
             <button type="submit">Update</button>
         </form>
     )
