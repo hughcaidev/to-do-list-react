@@ -3,12 +3,24 @@ import { useTaskList } from '../context/TaskListContext'
 
 const generateKey = (pre) => `${pre}_${new Date().getTime()}`
 
-function AddTaskForm() {
+function AddTaskForm({ showForm }) {
     const { addTaskToList } = useTaskList()
     const [taskErrorMessage, setTaskErrorMessage] = useState('')
 
     const inputRef = useRef('')
     const dateCompleteRef = useRef('')
+
+    function handleFocus() {
+        inputRef.current.classList.remove('error')
+        setTaskErrorMessage('')
+    }
+
+    function handleBlur() {
+        if (inputRef.current.value === '') {
+            inputRef.current.classList.add('error')
+            setTaskErrorMessage('This field is required')
+        }
+    }
 
     function addTask(e) {
         e.preventDefault()
@@ -18,6 +30,7 @@ function AddTaskForm() {
 
         if (task === '') {
             setTaskErrorMessage('This field is required')
+            inputRef.current.classList.add('error')
             return
         }
 
@@ -25,7 +38,9 @@ function AddTaskForm() {
 
         addTaskToList(item)
 
-        inputRef.current.value = ''
+        // inputRef.current.value = ''
+
+        showForm(false)
     }
 
     function clearDate() {
@@ -34,15 +49,25 @@ function AddTaskForm() {
 
     return (
         <form onSubmit={addTask}>
+            <button type="button" onClick={() => showForm(false)} className="close-btn">
+                &times;
+            </button>
+            <h2>Add Task</h2>
             <label htmlFor="new-task">
-                New Item:
-                <input type="text" ref={inputRef} id="new-task" />
+                <p>New Item:</p>
+                <input
+                    type="text"
+                    ref={inputRef}
+                    id="new-task"
+                    onFocus={handleFocus}
+                    onBlur={handleBlur}
+                />
+                {taskErrorMessage && <p className="error-message">{taskErrorMessage}</p>}
             </label>
-            {taskErrorMessage && <p>{taskErrorMessage}</p>}
             <label htmlFor="complete-date">
-                Due date:
-                <input type="date" ref={dateCompleteRef} id="complete-date" />
-                <button type="button" onClick={clearDate}>
+                <p>Due date:</p>
+                <input type="date" ref={dateCompleteRef} id="complete-date" name="complete-date" />
+                <button type="button" onClick={clearDate} className="reset-date-btn">
                     Reset date
                 </button>
             </label>

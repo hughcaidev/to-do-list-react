@@ -14,15 +14,14 @@ function App() {
 
     return (
         <div className="App">
-            <h1>To do List</h1>
+            <h1>To Do List</h1>
             <div className="to-do-list">
                 {!isTaskFormVisible ? (
-                    <button onClick={() => setTaskFormVisibility(true)}>Add Task</button>
+                    <button type="button" onClick={() => setTaskFormVisibility(true)}>
+                        Add Task
+                    </button>
                 ) : (
-                    <div>
-                        <button onClick={() => setTaskFormVisibility(false)}>&times;</button>
-                        <AddTaskForm />
-                    </div>
+                    <AddTaskForm showForm={setTaskFormVisibility} />
                 )}
                 <TaskList emptyListMessage="Looks like there are no tasks left. Try adding one!" />
                 {edittedTask && (

@@ -3,7 +3,7 @@ module.exports = {
         browser: true,
         es2021: true
     },
-    extends: ['plugin:react/recommended', 'airbnb', 'prettier'],
+    extends: ['eslint:recommended', 'plugin:react/recommended', 'airbnb', 'prettier'],
     overrides: [],
     parserOptions: {
         ecmaVersion: 'latest',
@@ -11,6 +11,10 @@ module.exports = {
     },
     plugins: ['react'],
     rules: {
-        'import/no-extraneous-dependencies': ['error', { devDependencies: true }]
+        'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
+        'react/prop-types': [0],
+        'react/jsx-no-constructed-context-values': ['warn'],
+        'react/button-has-type': ['warn'],
+        'react/jsx-no-useless-fragment': ['warn']
     }
-};
+}
