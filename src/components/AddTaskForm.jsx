@@ -37,9 +37,6 @@ function AddTaskForm({ showForm }) {
         const item = { key: generateKey(task), task, complete: false, completionDate }
 
         addTaskToList(item)
-
-        // inputRef.current.value = ''
-
         showForm(false)
     }
 
@@ -48,7 +45,7 @@ function AddTaskForm({ showForm }) {
     }
 
     return (
-        <form onSubmit={addTask}>
+        <form onSubmit={addTask} id="add-task-form">
             <button type="button" onClick={() => showForm(false)} className="close-btn">
                 &times;
             </button>

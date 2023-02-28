@@ -22,11 +22,10 @@ function EditTaskForm({ currentEditTask, setEditTask }) {
         e.preventDefault()
 
         const updatedTaskName = editItemRef.current.value
-        const updateCompletionDate = dateCompleteRef.current.value
 
         const updatedTask = {
-            task: updatedTaskName,
-            completionDate: updateCompletionDate
+            task: editItemRef.current.value,
+            completionDate: dateCompleteRef.current.value
         }
 
         if (updatedTaskName === '') {
