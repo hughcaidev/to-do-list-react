@@ -111,6 +111,23 @@ button {
     /* width: 2em; */
 }
 
+.to-do-list {
+    position: relative;
+}
+
+#add-task-btn {
+    float: right;
+}
+
+#add-task-form {
+    position: absolute;
+    width: 100%;
+    background-color: white;
+    border: 0.02em solid black;
+    padding: 1.5em;
+    border-radius: 0.5em;
+}
+
 label {
     position: relative;
     margin-bottom: 0.75em;
@@ -128,7 +145,8 @@ input.error {
 
 .list {
     list-style: none;
-    padding: 0;
+    /* margin: 1em 0; */
+    /* padding: 1em 0; */
     /* width: clamp(320px, 640px, 100%); */
 }
 
