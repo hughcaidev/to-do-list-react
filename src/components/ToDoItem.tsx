@@ -8,23 +8,23 @@ function ToDoItem({ item }) {
     const { removeItemFromList, toggleTaskCompleted } = useTaskList()
     const { setEdittedTask } = useEdittedTask()
 
-    const { key, task, complete, completionDate, dateCompleted } = item
+    const { key, task, dateCompleted } = item
     const dateCompletedFormated = new Date(dateCompleted)
 
     return (
-        <li key={key} className={`item ${complete && 'complete'}`}>
+        <li key={key} className={`item ${dateCompleted && 'complete'}`}>
             <div className="item-data">
                 <input
                     type="checkbox"
                     id={key}
-                    checked={complete}
+                    checked={dateCompleted}
                     onClick={() => toggleTaskCompleted(item)}
                 />
                 <div className="task-details">
                     <p className="task-name">{task}</p>
 
                     <div className="item-content">
-                        {completionDate && <p className="due-date">Due: {completionDate}</p>}
+                        {/* {completionDate && <p className="due-date">Due: {completionDate}</p>} */}
                         {dateCompleted && (
                             <p>Completed on {dateCompletedFormated.toLocaleDateString('en-GB')}</p>
                         )}
@@ -32,7 +32,7 @@ function ToDoItem({ item }) {
                 </div>
             </div>
             <div className="item--button-container">
-                {!complete && (
+                {!dateCompleted && (
                     <button type="button" onClick={() => setEdittedTask(item)}>
                         {/* Edit */}
                         &#9998;

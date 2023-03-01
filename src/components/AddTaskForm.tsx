@@ -7,8 +7,8 @@ function AddTaskForm({ showForm }) {
     const { addTaskToList } = useTaskList()
     const [taskErrorMessage, setTaskErrorMessage] = useState('')
 
-    const inputRef = useRef('')
-    const dateCompleteRef = useRef('')
+    const inputRef = useRef(null)
+    const dateCompleteRef = useRef(null)
 
     function handleFocus() {
         inputRef.current.classList.remove('error')

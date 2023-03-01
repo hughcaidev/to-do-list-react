@@ -5,8 +5,8 @@ function EditTaskForm({ currentEditTask, setEditTask }) {
     const { updateTaskInList } = useTaskList()
     const [errorMessage, setErrorMessage] = useState(null)
 
-    const editItemRef = useRef()
-    const dateCompleteRef = useRef()
+    const editItemRef = useRef(null)
+    const dateCompleteRef = useRef(null)
 
     useEffect(() => {
         if (!currentEditTask) {
