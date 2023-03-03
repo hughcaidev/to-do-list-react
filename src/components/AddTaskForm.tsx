@@ -26,7 +26,7 @@ function AddTaskForm({ showForm }) {
         e.preventDefault()
 
         const task = inputRef.current.value
-        const completionDate = dateCompleteRef.current.value
+        const dueDate = dateCompleteRef.current.value
 
         if (task === '') {
             setTaskErrorMessage('This field is required')
@@ -34,7 +34,7 @@ function AddTaskForm({ showForm }) {
             return
         }
 
-        const item = { key: generateKey(task), task, complete: false, completionDate }
+        const item = { key: generateKey(task), task, dueDate }
 
         addTaskToList(item)
         showForm(false)

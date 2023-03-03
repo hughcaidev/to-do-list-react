@@ -8,7 +8,7 @@ function ToDoItem({ item }) {
     const { removeItemFromList, toggleTaskCompleted } = useTaskList()
     const { setEdittedTask } = useEdittedTask()
 
-    const { key, task, dateCompleted } = item
+    const { key, task, dateCompleted, dueDate } = item
     const dateCompletedFormated = new Date(dateCompleted)
 
     return (
@@ -24,7 +24,7 @@ function ToDoItem({ item }) {
                     <p className="task-name">{task}</p>
 
                     <div className="item-content">
-                        {/* {completionDate && <p className="due-date">Due: {completionDate}</p>} */}
+                        {dueDate && <p className="due-date">Due: {dueDate}</p>}
                         {dateCompleted && (
                             <p>Completed on {dateCompletedFormated.toLocaleDateString('en-GB')}</p>
                         )}

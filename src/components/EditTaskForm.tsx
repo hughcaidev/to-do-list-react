@@ -3,7 +3,7 @@ import { useTaskList } from '../context/TaskListContext'
 
 function EditTaskForm({ currentEditTask, setEditTask }) {
     const { updateTaskInList } = useTaskList()
-    const [errorMessage, setErrorMessage] = useState(null)
+    const [errorMessage, setErrorMessage] = useState('')
 
     const editItemRef = useRef(null)
     const dateCompleteRef = useRef(null)
@@ -23,19 +23,19 @@ function EditTaskForm({ currentEditTask, setEditTask }) {
 
         const updatedTaskName = editItemRef.current.value
 
-        const updatedTask = {
-            task: editItemRef.current.value,
-            completionDate: dateCompleteRef.current.value
-        }
-
         if (updatedTaskName === '') {
             setErrorMessage('You need to enter an task')
             return
         }
 
+        const updatedTask = {
+            task: editItemRef.current.value,
+            completionDate: dateCompleteRef.current.value
+        }
+
         updateTaskInList(currentEditTask, updatedTask)
 
-        setEditTask()
+        setEditTask({})
     }
 
     function clearDate() {
@@ -44,7 +44,7 @@ function EditTaskForm({ currentEditTask, setEditTask }) {
 
     return (
         <form onSubmit={updateItem}>
-            <button type="button" onClick={() => setEditTask()} className="close-btn">
+            <button type="button" onClick={() => setEditTask({})} className="close-btn">
                 &times;
             </button>
             <h2>Edit Task</h2>
@@ -55,7 +55,7 @@ function EditTaskForm({ currentEditTask, setEditTask }) {
             {errorMessage && <p>{errorMessage}</p>}
             <label htmlFor="complete-date">
                 <p>Due Date</p>
-                <input type="date" ref={dateCompleteRef} id="complete-date" />
+                <input type="date" ref={dateCompleteRef} id="complete-date" name="due-date" />
                 <button type="button" onClick={clearDate} className="reset-date-btn">
                     Reset date
                 </button>
