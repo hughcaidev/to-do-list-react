@@ -8,7 +8,7 @@ import { useEdittedTask } from './context/EditTaskContext'
 // import "./styles.css"
 
 function App() {
-    const { edittedTask, setEdittedTask } = useEdittedTask()
+    const { edittedTask } = useEdittedTask()
 
     const [isTaskFormVisible, setTaskFormVisibility] = useState(false)
 
@@ -28,9 +28,7 @@ function App() {
                     <AddTaskForm showForm={setTaskFormVisibility} />
                 )}
                 <TaskList emptyListMessage="Looks like there are no tasks left. Try adding one!" />
-                {Object.keys(edittedTask).length !== 0 && (
-                    <EditTaskForm currentEditTask={edittedTask} setEditTask={setEdittedTask} />
-                )}
+                {Object.keys(edittedTask).length !== 0 && <EditTaskForm />}
             </div>
         </div>
     )

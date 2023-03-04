@@ -1,64 +1,80 @@
-import React, { useEffect, useRef, useState } from 'react'
-import { useTaskList } from '../context/TaskListContext'
+import React, { useEffect, useReducer, useRef, useState } from 'react'
+import { TaskProp, useTaskList } from '../context/TaskListContext'
+import { useEdittedTask } from '../context/EditTaskContext'
 
-function EditTaskForm({ currentEditTask, setEditTask }) {
+function EditTaskForm() {
+    const { edittedTask, setEdittedTask } = useEdittedTask()
     const { updateTaskInList } = useTaskList()
     const [errorMessage, setErrorMessage] = useState('')
 
-    const editItemRef = useRef(null)
-    const dateCompleteRef = useRef(null)
+    function reducer(state, action) {
+        const newValue = { ...state, ...action }
 
-    useEffect(() => {
-        if (!currentEditTask) {
-            return
+        return newValue
+    }
+
+    const [state, dispatch] = useReducer(reducer, edittedTask)
+
+    function handleError() {
+        const { task } = state
+
+        if (task === '') {
+            setErrorMessage('This field is required')
         }
-        const { task, completionDate } = currentEditTask
+    }
 
-        editItemRef.current.value = task
-        dateCompleteRef.current.value = completionDate
-    }, [currentEditTask])
-
-    function updateItem(e) {
+    function handleSubmit(e) {
         e.preventDefault()
 
-        const updatedTaskName = editItemRef.current.value
+        handleError()
 
-        if (updatedTaskName === '') {
-            setErrorMessage('You need to enter an task')
-            return
-        }
+        updateTaskInList(state)
 
-        const updatedTask = {
-            task: editItemRef.current.value,
-            completionDate: dateCompleteRef.current.value
-        }
-
-        updateTaskInList(currentEditTask, updatedTask)
-
-        setEditTask({})
+        setEdittedTask({} as TaskProp)
     }
 
     function clearDate() {
-        dateCompleteRef.current.value = ''
+        dispatch({ dueDate: '' })
     }
 
+    const todayDate = new Date().toISOString().slice(0, 10)
+
     return (
-        <form onSubmit={updateItem}>
-            <button type="button" onClick={() => setEditTask({})} className="close-btn">
+        <form onSubmit={handleSubmit}>
+            <button
+                type="button"
+                onClick={() => setEdittedTask({} as TaskProp)}
+                className="close-btn"
+            >
                 &times;
             </button>
             <h2>Edit Task</h2>
             <label htmlFor="edit-task">
                 <p>Task (required)</p>
-                <input type="text" ref={editItemRef} id="edit-task" />
+                <input
+                    type="text"
+                    value={state.task}
+                    onChange={(e) => dispatch({ task: e.target.value })}
+                    id="edit-task"
+                    onBlur={handleError}
+                />
             </label>
             {errorMessage && <p>{errorMessage}</p>}
-            <label htmlFor="complete-date">
+            <label htmlFor="due-date">
                 <p>Due Date</p>
-                <input type="date" ref={dateCompleteRef} id="complete-date" name="due-date" />
-                <button type="button" onClick={clearDate} className="reset-date-btn">
-                    Reset date
-                </button>
+                <input
+                    type="date"
+                    value={state.dueDate}
+                    onChange={(e) => dispatch({ dueDate: e.target.value })}
+                    id="complete-date"
+                    name="due-date"
+                    min={todayDate}
+                />
+                {state.dueDate !== '' && (
+                    <button type="button" onClick={clearDate} className="reset-date-btn">
+                        Reset date
+                    </button>
+                )}
             </label>
 
             <button type="submit">Update</button>

@@ -19,7 +19,7 @@ interface TaskListProp {
     items: TaskProp[]
     addTaskToList: (task: Partial<TaskProp>) => void
     removeItemFromList: (task: TaskProp) => void
-    updateTaskInList: (currentTask: TaskProp, updatedTask: Partial<TaskProp>) => void
+    updateTaskInList: (updatedTask: Partial<TaskProp>) => void
     toggleTaskCompleted: (task: TaskProp) => void
 }
 
@@ -36,11 +36,10 @@ export function TaskListProvider({ children }): ReactElement {
         setItems((prev) => prev.filter((i) => i !== item))
     }
 
-    function updateTaskInList(currentTask, updatedTask) {
+    function updateTaskInList(updatedTask) {
         const updateList = items.map((item) => {
-            if (item === currentTask) {
-                const { task, dueDate } = updatedTask
-                return { ...item, task, dueDate }
+            if (item.key === updatedTask.key) {
+                return { ...item, ...updatedTask }
             }
 
             return item
