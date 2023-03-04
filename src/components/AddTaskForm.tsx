@@ -7,8 +7,8 @@ function AddTaskForm({ showForm }) {
     const { addTaskToList } = useTaskList()
     const [taskErrorMessage, setTaskErrorMessage] = useState('')
 
-    const inputRef = useRef('')
-    const dateCompleteRef = useRef('')
+    const inputRef = useRef(null)
+    const dateCompleteRef = useRef(null)
 
     function handleFocus() {
         inputRef.current.classList.remove('error')
@@ -26,7 +26,7 @@ function AddTaskForm({ showForm }) {
         e.preventDefault()
 
         const task = inputRef.current.value
-        const completionDate = dateCompleteRef.current.value
+        const dueDate = dateCompleteRef.current.value
 
         if (task === '') {
             setTaskErrorMessage('This field is required')
@@ -34,7 +34,7 @@ function AddTaskForm({ showForm }) {
             return
         }
 
-        const item = { key: generateKey(task), task, complete: false, completionDate }
+        const item = { key: generateKey(task), task, dueDate }
 
         addTaskToList(item)
         showForm(false)

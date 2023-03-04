@@ -1,0 +1,14 @@
+{
+    "compilerOptions": {
+        // "outDir": "./built",
+        "checkJs": true,
+        "allowJs": true,
+        "target": "es6",
+        "module": "commonjs",
+        "skipLibCheck": true,
+        "jsx": "react",
+        "allowSyntheticDefaultImports": true
+    },
+    "include": ["./src/**/*"],
+    "exclude": ["node_modules", "build"]
+}

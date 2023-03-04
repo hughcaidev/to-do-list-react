@@ -17,14 +17,18 @@ function App() {
             <h1>To Do List</h1>
             <div className="to-do-list">
                 {!isTaskFormVisible ? (
-                    <button type="button" onClick={() => setTaskFormVisibility(true)}>
-                        Add Task
+                    <button
+                        type="button"
+                        onClick={() => setTaskFormVisibility(true)}
+                        id="add-task-btn"
+                    >
+                        + Add Task
                     </button>
                 ) : (
                     <AddTaskForm showForm={setTaskFormVisibility} />
                 )}
                 <TaskList emptyListMessage="Looks like there are no tasks left. Try adding one!" />
-                {edittedTask && (
+                {Object.keys(edittedTask).length !== 0 && (
                     <EditTaskForm currentEditTask={edittedTask} setEditTask={setEdittedTask} />
                 )}
             </div>

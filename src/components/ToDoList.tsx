@@ -5,8 +5,8 @@ import ToDoItem from './ToDoItem'
 function TaskList({ emptyListMessage }) {
     const { items } = useTaskList()
 
-    const activeTasks = items.filter((item) => !item.complete)
-    const completedTasks = items.filter((item) => item.complete)
+    const activeTasks = items.filter((item) => !item.dateCompleted)
+    const completedTasks = items.filter((item) => item.dateCompleted)
 
     return (
         <div>
