@@ -1,10 +1,8 @@
-import React, { useEffect, useReducer, useRef, useState } from 'react'
-import { TaskProp, useTaskList } from '../context/TaskListContext'
+import React, { useReducer, useState } from 'react'
 import { useEdittedTask } from '../context/EditTaskContext'
 
-function EditTaskForm() {
-    const { edittedTask, setEdittedTask } = useEdittedTask()
-    const { updateTaskInList } = useTaskList()
+function EditTaskForm({ title, submitButtonText, amendTask, closeForm }) {
+    const { edittedTask } = useEdittedTask()
     const [errorMessage, setErrorMessage] = useState('')
 
     function reducer(state, action) {
@@ -28,9 +26,9 @@ function EditTaskForm() {
 
         handleError()
 
-        updateTaskInList(state)
+        amendTask(state)
 
-        setEdittedTask({} as TaskProp)
+        closeForm()
     }
 
     function clearDate() {
@@ -41,14 +39,10 @@ function EditTaskForm() {
 
     return (
         <form onSubmit={handleSubmit}>
-            <button
-                type="button"
-                onClick={() => setEdittedTask({} as TaskProp)}
-                className="close-btn"
-            >
+            <button type="button" onClick={() => closeForm()} className="close-btn">
                 &times;
             </button>
-            <h2>Edit Task</h2>
+            <h2>{title}</h2>
             <label htmlFor="edit-task">
                 <p>Task (required)</p>
                 <input
@@ -77,7 +71,7 @@ function EditTaskForm() {
                 )}
             </label>
 
-            <button type="submit">Update</button>
+            <button type="submit">{submitButtonText}</button>
         </form>
     )
 }

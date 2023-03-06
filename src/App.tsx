@@ -1,15 +1,15 @@
 import React, { useState } from 'react'
 import TaskList from './components/ToDoList'
-import AddTaskForm from './components/AddTaskForm'
-import EditTaskForm from './components/EditTaskForm'
+import TaskForm from './components/TaskForm'
 import { useEdittedTask } from './context/EditTaskContext'
+import { TaskProp, useTaskList } from './context/TaskListContext'
 // import './App.css'
 
 // import "./styles.css"
 
 function App() {
-    const { edittedTask } = useEdittedTask()
-
+    const { edittedTask, setEdittedTask } = useEdittedTask()
+    const { updateTaskInList, addTaskToList } = useTaskList()
     const [isTaskFormVisible, setTaskFormVisibility] = useState(false)
 
     return (
@@ -25,10 +25,22 @@ function App() {
                         + Add Task
                     </button>
                 ) : (
-                    <AddTaskForm showForm={setTaskFormVisibility} />
+                    <TaskForm
+                        title="Add Task"
+                        submitButtonText="Add"
+                        amendTask={addTaskToList}
+                        closeForm={() => setTaskFormVisibility(false)}
+                    />
                 )}
                 <TaskList emptyListMessage="Looks like there are no tasks left. Try adding one!" />
-                {Object.keys(edittedTask).length !== 0 && <EditTaskForm />}
+                {Object.keys(edittedTask).length !== 0 && (
+                    <TaskForm
+                        title="Edit Task"
+                        submitButtonText="Update"
+                        amendTask={updateTaskInList}
+                        closeForm={() => setEdittedTask({} as TaskProp)}
+                    />
+                )}
             </div>
         </div>
     )
