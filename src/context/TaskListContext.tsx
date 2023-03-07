@@ -2,17 +2,16 @@ import React, { useState, useContext, ReactElement } from 'react'
 
 const initialToDoList = [
     { task: 'Task 1', key: 1, complete: false },
-    // { task: 'Task 2', key: 2, complete: true, dateCompleted: Date('1677415007518') },
     { task: 'Task 2', key: 2, complete: true, dateCompleted: 1677415007518 },
-    { task: 'Task 3', key: 3, complete: false, dueDate: '2023-02-26' }
+    { task: 'Task 3', key: 3, complete: false, dueDate: 1677615007518 },
+    { task: 'Task 4', key: 2, complete: true, dueDate: 1672115007518 }
 ]
 
 export interface TaskProp {
     task: string
     key: string | number
-    // complete: boolean
     dateCompleted?: typeof Date | string | number | null
-    dueDate?: string
+    dueDate?: typeof Date | number
 }
 
 interface TaskListProp {

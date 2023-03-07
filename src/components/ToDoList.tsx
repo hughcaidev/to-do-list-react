@@ -2,12 +2,15 @@ import React from 'react'
 import { useTaskList } from '../context/TaskListContext'
 import { useEdittedTask } from '../context/EditTaskContext'
 
+import '../styles.css'
+
 function ToDoItem({ item }) {
     const { removeItemFromList, toggleTaskCompleted } = useTaskList()
     const { setEdittedTask } = useEdittedTask()
 
     const { key, task, dateCompleted, dueDate } = item
     const dateCompletedFormated = new Date(dateCompleted)
+    const dueDateFormated = new Date(dueDate)
 
     return (
         <li key={key} className={`item ${dateCompleted && 'complete'}`}>
@@ -22,7 +25,11 @@ function ToDoItem({ item }) {
                     <p className="task-name">{task}</p>
 
                     <div className="item-content">
-                        {dueDate && <p className="due-date">Due: {dueDate}</p>}
+                        {dueDate && (
+                            <p className="due-date">
+                                Due: {dueDateFormated.toLocaleDateString('en-GB')}
+                            </p>
+                        )}
                         {dateCompleted && (
                             <p>Completed on {dateCompletedFormated.toLocaleDateString('en-GB')}</p>
                         )}
@@ -44,11 +51,23 @@ function ToDoItem({ item }) {
     )
 }
 
+function compareByDate(a, b) {
+    if (a.dueDate > b.dueDate) {
+        return 1
+    }
+
+    if (a.dueDate < b.dueDate) {
+        return -1
+    }
+
+    return 1
+}
+
 function TaskList({ emptyListMessage }) {
     const { items } = useTaskList()
 
-    const activeTasks = items.filter((item) => !item.dateCompleted)
-    const completedTasks = items.filter((item) => item.dateCompleted)
+    const activeTasks = items.filter((item) => !item.dateCompleted).sort(compareByDate)
+    const completedTasks = items.filter((item) => item.dateCompleted).sort(compareByDate)
 
     return (
         <div>

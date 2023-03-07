@@ -59,7 +59,7 @@ function EditTaskForm({ title, submitButtonText, amendTask, closeForm }) {
                 <input
                     type="date"
                     value={state.dueDate}
-                    onChange={(e) => dispatch({ dueDate: e.target.value })}
+                    onChange={(e) => dispatch({ dueDate: e.target.valueAsDate })}
                     id="complete-date"
                     name="due-date"
                     min={todayDate}
