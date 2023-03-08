@@ -63,7 +63,7 @@ function compareByDate(a, b) {
     return 1
 }
 
-function TaskList({ emptyListMessage }) {
+function TaskList() {
     const { items } = useTaskList()
 
     const activeTasks = items.filter((item) => !item.dateCompleted).sort(compareByDate)
@@ -78,7 +78,7 @@ function TaskList({ emptyListMessage }) {
                 {completedTasks.map((task) => (
                     <ToDoItem item={task} />
                 ))}
-                {items.length === 0 && <p>{emptyListMessage}</p>}
+                {items.length === 0 && <p>Looks like there are no tasks left. Try adding one!</p>}
             </ul>
         </div>
     )

@@ -32,7 +32,7 @@ function App() {
                         closeForm={() => setTaskFormVisibility(false)}
                     />
                 )}
-                <TaskList emptyListMessage="Looks like there are no tasks left. Try adding one!" />
+                <TaskList />
                 {Object.keys(edittedTask).length !== 0 && (
                     <TaskForm
                         title="Edit Task"
