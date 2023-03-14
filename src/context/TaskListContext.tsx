@@ -9,9 +9,9 @@ const initialToDoList = [
 
 export interface TaskProp {
     task: string
-    key: string | number
+    key?: string | number
     dateCompleted?: typeof Date | string | number | null
-    dueDate?: typeof Date | number
+    dueDate?: typeof Date | number | string
 }
 
 interface TaskListProp {

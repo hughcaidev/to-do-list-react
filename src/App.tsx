@@ -33,12 +33,12 @@ function App() {
                     />
                 )}
                 <TaskList />
-                {Object.keys(edittedTask).length !== 0 && (
+                {edittedTask.task !== '' && (
                     <TaskForm
                         title="Edit Task"
                         submitButtonText="Update"
                         amendTask={updateTaskInList}
-                        closeForm={() => setEdittedTask({} as TaskProp)}
+                        closeForm={() => setEdittedTask({ task: '', dueDate: '' } as TaskProp)}
                     />
                 )}
             </div>

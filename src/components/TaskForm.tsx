@@ -2,6 +2,10 @@ import React, { useReducer, useState } from 'react'
 import { useEdittedTask } from '../context/EditTaskContext'
 
 function EditTaskForm({ title, submitButtonText, amendTask, closeForm }) {
+    // const newTask = {
+    //     task: '',
+    //     dueDate: ''
+    // }
     const { edittedTask } = useEdittedTask()
     const [errorMessage, setErrorMessage] = useState('')
 
@@ -23,12 +27,14 @@ function EditTaskForm({ title, submitButtonText, amendTask, closeForm }) {
 
     function handleSubmit(e) {
         e.preventDefault()
+        const { task, dueDate } = state
 
-        handleError()
-
-        amendTask(state)
-
-        closeForm()
+        if (task === '') {
+            setErrorMessage('This field is required')
+        } else {
+            amendTask(state)
+            closeForm()
+        }
     }
 
     function clearDate() {
@@ -52,14 +58,14 @@ function EditTaskForm({ title, submitButtonText, amendTask, closeForm }) {
                     id="edit-task"
                     onBlur={handleError}
                 />
+                {errorMessage && <p className="error-message">{errorMessage}</p>}
             </label>
-            {errorMessage && <p>{errorMessage}</p>}
             <label htmlFor="due-date">
                 <p>Due Date</p>
                 <input
                     type="date"
                     value={state.dueDate}
-                    onChange={(e) => dispatch({ dueDate: e.target.valueAsDate })}
+                    onChange={(e) => dispatch({ dueDate: e.target.value })}
                     id="complete-date"
                     name="due-date"
                     min={todayDate}
