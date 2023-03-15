@@ -2,10 +2,6 @@ import React, { useReducer, useState, useRef } from 'react'
 import { useEdittedTask } from '../context/EditTaskContext'
 
 function EditTaskForm({ title, submitButtonText, amendTask, closeForm }) {
-    // const newTask = {
-    //     task: '',
-    //     dueDate: ''
-    // }
     const { edittedTask } = useEdittedTask()
     const [errorMessage, setErrorMessage] = useState('')
     const taskRef = useRef(null)
