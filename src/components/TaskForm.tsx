@@ -81,7 +81,7 @@ function EditTaskForm({ title, submitButtonText, amendTask, closeForm }) {
                     name="due-date"
                     min={todayDate}
                 />
-                {state.dueDate !== '' && (
+                {state.dueDate && (
                     <button type="button" onClick={clearDate} className="reset-date-btn">
                         Reset date
                     </button>
