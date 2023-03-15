@@ -1,4 +1,4 @@
-import React, { useReducer, useState } from 'react'
+import React, { useReducer, useState, useRef } from 'react'
 import { useEdittedTask } from '../context/EditTaskContext'
 
 function EditTaskForm({ title, submitButtonText, amendTask, closeForm }) {
@@ -8,6 +8,7 @@ function EditTaskForm({ title, submitButtonText, amendTask, closeForm }) {
     // }
     const { edittedTask } = useEdittedTask()
     const [errorMessage, setErrorMessage] = useState('')
+    const taskRef = useRef(null)
 
     function reducer(state, action) {
         const newValue = { ...state, ...action }
@@ -17,24 +18,32 @@ function EditTaskForm({ title, submitButtonText, amendTask, closeForm }) {
 
     const [state, dispatch] = useReducer(reducer, edittedTask)
 
-    function handleError() {
+    function handleFocus() {
+        taskRef.current.classList.remove('error')
+        setErrorMessage('')
+    }
+
+    function handleBlur() {
         const { task } = state
 
         if (task === '') {
+            taskRef.current.classList.add('error')
             setErrorMessage('This field is required')
         }
     }
 
     function handleSubmit(e) {
         e.preventDefault()
-        const { task, dueDate } = state
+        const { task } = state
 
         if (task === '') {
+            taskRef.current.classList.add('error')
             setErrorMessage('This field is required')
-        } else {
-            amendTask(state)
-            closeForm()
+            return
         }
+
+        amendTask(state)
+        closeForm()
     }
 
     function clearDate() {
@@ -55,8 +64,10 @@ function EditTaskForm({ title, submitButtonText, amendTask, closeForm }) {
                     type="text"
                     value={state.task}
                     onChange={(e) => dispatch({ task: e.target.value })}
+                    ref={taskRef}
                     id="edit-task"
-                    onBlur={handleError}
+                    onBlur={handleBlur}
+                    onFocus={handleFocus}
                 />
                 {errorMessage && <p className="error-message">{errorMessage}</p>}
             </label>
