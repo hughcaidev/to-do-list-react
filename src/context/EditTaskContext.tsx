@@ -9,7 +9,7 @@ interface EdittedTaskProps {
 const EdittedTask = React.createContext({} as EdittedTaskProps)
 
 export function EdittedTaskProvider({ children }) {
-    const [edittedTask, setEdittedTask] = useState({ task: '', dueDate: '' } as TaskProp)
+    const [edittedTask, setEdittedTask] = useState({} as TaskProp)
 
     const foo = { edittedTask, setEdittedTask }
 

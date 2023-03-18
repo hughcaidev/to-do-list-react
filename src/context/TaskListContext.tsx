@@ -2,23 +2,24 @@ import React, { useState, useContext, ReactElement } from 'react'
 
 const initialToDoList = [
     { task: 'Task 1', key: 1, complete: false },
+    // { task: 'Task 2', key: 2, complete: true, dateCompleted: Date('1677415007518') },
     { task: 'Task 2', key: 2, complete: true, dateCompleted: 1677415007518 },
-    { task: 'Task 3', key: 3, complete: false, dueDate: 1677615007518 },
-    { task: 'Task 4', key: 2, complete: true, dueDate: 1672115007518 }
+    { task: 'Task 3', key: 3, complete: false, dueDate: '2023-02-26' }
 ]
 
 export interface TaskProp {
     task: string
-    key?: string | number
+    key: string | number
+    // complete: boolean
     dateCompleted?: typeof Date | string | number | null
-    dueDate?: typeof Date | number | string
+    dueDate?: string
 }
 
 interface TaskListProp {
     items: TaskProp[]
     addTaskToList: (task: Partial<TaskProp>) => void
     removeItemFromList: (task: TaskProp) => void
-    updateTaskInList: (updatedTask: Partial<TaskProp>) => void
+    updateTaskInList: (currentTask: TaskProp, updatedTask: Partial<TaskProp>) => void
     toggleTaskCompleted: (task: TaskProp) => void
 }
 
@@ -35,10 +36,11 @@ export function TaskListProvider({ children }): ReactElement {
         setItems((prev) => prev.filter((i) => i !== item))
     }
 
-    function updateTaskInList(updatedTask) {
+    function updateTaskInList(currentTask, updatedTask) {
         const updateList = items.map((item) => {
-            if (item.key === updatedTask.key) {
-                return { ...item, ...updatedTask }
+            if (item === currentTask) {
+                const { task, dueDate } = updatedTask
+                return { ...item, task, dueDate }
             }
 
             return item
