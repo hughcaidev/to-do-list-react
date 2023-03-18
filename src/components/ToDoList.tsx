@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useReducer } from 'react'
 import { useTaskList } from '../context/TaskListContext'
 import { useEdittedTask } from '../context/EditTaskContext'
 
@@ -69,15 +69,40 @@ function TaskList() {
     const activeTasks = items.filter((item) => !item.dateCompleted).sort(compareByDate)
     const completedTasks = items.filter((item) => item.dateCompleted).sort(compareByDate)
 
+    function reducer(state, action) {
+        const newValue = { ...state, ...action }
+
+        return newValue
+    }
+
+    const [state, dispatch] = useReducer(reducer, { complete: true, incomplete: true })
+
     return (
         <div>
+            <div>
+                <p>Filter</p>
+                <label htmlFor="complete">
+                    <input
+                        type="checkbox"
+                        checked={state.complete}
+                        onClick={() => dispatch({ complete: !state.complete })}
+                        id="complete"
+                    />
+                    <span>Complete</span>
+                </label>
+                <label htmlFor="incomplete">
+                    <input
+                        type="checkbox"
+                        checked={state.incomplete}
+                        onClick={() => dispatch({ incomplete: !state.incomplete })}
+                        id="incomplete"
+                    />
+                    <span>Incomplete</span>
+                </label>
+            </div>
             <ul className="list">
-                {activeTasks.map((task) => (
-                    <ToDoItem item={task} />
-                ))}
-                {completedTasks.map((task) => (
-                    <ToDoItem item={task} />
-                ))}
+                {state.incomplete && activeTasks.map((task) => <ToDoItem item={task} />)}
+                {state.complete && completedTasks.map((task) => <ToDoItem item={task} />)}
                 {items.length === 0 && <p>Looks like there are no tasks left. Try adding one!</p>}
             </ul>
         </div>
